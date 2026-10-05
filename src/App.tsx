@@ -54,6 +54,7 @@ function App() {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrollProgress, setScrollProgress] = useState(0)
+  const modalRef = useRef<HTMLDivElement>(null)
   const mood = moods[activeMood]
   const moodProduct = products.find((product) => product.id === mood.productId)!
   const visibleProducts = category === 'All' ? products : products.filter((product) => product.category === category)
@@ -77,14 +78,32 @@ function App() {
   }, [category])
   useEffect(() => {
     if (!selectedProduct) return
-    const close = (event: KeyboardEvent) => { if (event.key === 'Escape') setSelectedProduct(null) }
+    const previousFocus = document.activeElement as HTMLElement | null
+    const previousOverflow = document.body.style.overflow
+    const close = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') { event.preventDefault(); setSelectedProduct(null) }
+      if (event.key === 'Tab') {
+        const controls = modalRef.current?.querySelectorAll<HTMLElement>('button, a[href], [tabindex="0"]')
+        if (!controls?.length) return
+        const first = controls[0]
+        const last = controls[controls.length - 1]
+        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus() }
+        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus() }
+      }
+    }
+    modalRef.current?.querySelector<HTMLButtonElement>('button')?.focus()
     document.addEventListener('keydown', close)
     document.body.style.overflow = 'hidden'
-    return () => { document.removeEventListener('keydown', close); document.body.style.overflow = '' }
+    return () => {
+      document.removeEventListener('keydown', close)
+      document.body.style.overflow = previousOverflow
+      previousFocus?.focus()
+    }
   }, [selectedProduct])
   const closeMenu = () => setMenuOpen(false)
 
   return <div className="site-shell">
+    <a className="skip-link" href="#collection">Skip to collection</a>
     <div className="scroll-progress" style={{ transform: 'scaleX(' + scrollProgress + ')' }} aria-hidden="true" />
     <div className="announcement"><span>DRIPVAULT / DROP 001</span><span>MADE TO STAND OUT. BUILT TO LIVE IN.</span><span>EST. 2026 ↗</span></div>
     <header className="site-header">
@@ -136,7 +155,7 @@ function App() {
       <section className="closing" aria-labelledby="closing-title"><div className="closing-star" aria-hidden="true">✳</div><span className="closing-kicker">YOUR NEXT CHAPTER STARTS HERE</span><h2 id="closing-title">THE STREET IS<br /><em>YOUR RUNWAY.</em></h2><a className="button button-dark" href="#collection">Find your piece <ArrowUpRight size={20} /></a><div className="closing-bottom"><span>DRIPVAULT / DROP 001</span><span>MADE FOR THE MOMENT</span></div></section>
     </main>
     <footer className="footer"><a className="wordmark" href="#top" aria-label="Back to top">DRIP<span>VAULT</span><i aria-hidden="true">✳</i></a><p>Wear the difference.</p><a href="#top">Back to top ↑</a><span>© {new Date().getFullYear()} DRIPVAULT. CONCEPT SHOWCASE.</span></footer>
-    {selectedProduct && <div className="modal-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) setSelectedProduct(null) }}><div className="product-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title"><button className="modal-close" onClick={() => setSelectedProduct(null)} aria-label="Close product details"><X size={23} /></button><img src={selectedProduct.image} alt={selectedProduct.name} width="1024" height="1024" /><div className="modal-copy"><span>DRIPVAULT / DROP 001 / {selectedProduct.index}</span><h2 id="modal-title">{selectedProduct.name}</h2><p>{selectedProduct.details}</p><div className="modal-price">₹{selectedProduct.price.toLocaleString('en-IN')} <span>CONCEPT COLLECTION</span></div><button onClick={() => { setSelectedProduct(null); document.getElementById('fit-lab')?.scrollIntoView({ behavior: 'smooth' }) }}>Explore the fit lab <ArrowRight size={18} /></button></div></div></div>}
+    {selectedProduct && <div className="modal-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) setSelectedProduct(null) }}><div className="product-modal" ref={modalRef} role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-describedby="modal-description"><button className="modal-close" onClick={() => setSelectedProduct(null)} aria-label="Close product details"><X size={23} /></button><img src={selectedProduct.image} alt={selectedProduct.name} width="1024" height="1024" /><div className="modal-copy"><span>DRIPVAULT / DROP 001 / {selectedProduct.index}</span><h2 id="modal-title">{selectedProduct.name}</h2><p id="modal-description">{selectedProduct.details}</p><div className="modal-price">₹{selectedProduct.price.toLocaleString('en-IN')} <span>CONCEPT COLLECTION</span></div><button onClick={() => { setSelectedProduct(null); document.getElementById('fit-lab')?.scrollIntoView({ behavior: 'smooth' }) }}>Explore the fit lab <ArrowRight size={18} /></button></div></div></div>}
   </div>
 }
 export default App

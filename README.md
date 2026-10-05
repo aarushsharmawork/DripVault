@@ -3,7 +3,7 @@
 **Live site:** https://aarushsharmawork.github.io/DripVault/  
 **Repository:** https://github.com/aarushsharmawork/DripVault
 
-## Brand and concept (78 words)
+## Brand and concept (under 150 words)
 
 Dripvault is streetwear for people who would rather be seen than blend in. Drop 001 presents four expressive staples through a high contrast editorial storefront: electric lime, ink black, oversized display type, and direct, confident copy. The visual system borrows the energy of gig posters and fashion lookbooks. Visitors can filter the collection, inspect each piece, and use the Fit Lab to find a style direction that matches their mood. The experience is designed to feel bold without making navigation or shopping discovery difficult.
 
@@ -21,10 +21,15 @@ React 19, TypeScript, Vite 8, CSS, and Lucide icons. GitHub Actions builds and d
 
 ## Assets and credits
 
-- Four fashion images were already present in this local project. Their original provenance is not documented. Confirm ownership or replace them with licensed images before final submission.
+- Fashion imagery: user-supplied AI generated images from the original project, converted to WebP. No stock photography was added.
 - Lucide icons: [Lucide](https://lucide.dev/), ISC license.
 - Typography uses local system fonts (Impact/Arial/Georgia); no external font requests.
 - Layout, copy, CSS artwork, and interaction code were created for this project.
+- AI assistance: Codex assisted with design, copy, implementation, and validation.
+
+## Presentation
+
+See [PRESENTATION.md](PRESENTATION.md) for the walkthrough and explanations of the code and design choices.
 
 ## Run locally
 

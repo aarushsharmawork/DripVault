@@ -15,6 +15,7 @@ db_*.json
 public/*.jpg
 src/assets/
 src/App.css
+public/icons.svg
 
 # Editor directories and files
 .vscode/*
