@@ -131,7 +131,7 @@ function App() {
         </div>
         <div className="hero-side-note">SCROLL TO ENTER THE VAULT <ArrowDown size={14} /></div>
       </section>
-      <div className="ticker" aria-label="Brand mantra"><div className="ticker-track" aria-hidden="true">WEAR THE DIFFERENCE <span>✳</span> NO QUIET ENTRANCES <span>✳</span> WEAR THE DIFFERENCE <span>✳</span> NO QUIET ENTRANCES <span>✳</span></div></div>
+      <div className="ticker" aria-hidden="true"><div className="ticker-track" aria-hidden="true">WEAR THE DIFFERENCE <span>✳</span> NO QUIET ENTRANCES <span>✳</span> WEAR THE DIFFERENCE <span>✳</span> NO QUIET ENTRANCES <span>✳</span></div></div>
       <section className="collection section-pad" id="collection" aria-labelledby="collection-title">
         <div className="section-kicker reveal"><span>01 / THE DROP</span><span>CURATED FOR THE UNCONVENTIONAL</span></div>
         <div className="collection-heading reveal"><h2 id="collection-title">THE PIECES.<br /><em>THE POINT OF VIEW.</em></h2><p>Four signatures. Infinite ways to wear them. Find the piece that feels like you.</p></div>
@@ -154,7 +154,7 @@ function App() {
       </section>
       <section className="closing" aria-labelledby="closing-title"><div className="closing-star" aria-hidden="true">✳</div><span className="closing-kicker">YOUR NEXT CHAPTER STARTS HERE</span><h2 id="closing-title">THE STREET IS<br /><em>YOUR RUNWAY.</em></h2><a className="button button-dark" href="#collection">Find your piece <ArrowUpRight size={20} /></a><div className="closing-bottom"><span>DRIPVAULT / DROP 001</span><span>MADE FOR THE MOMENT</span></div></section>
     </main>
-    <footer className="footer"><a className="wordmark" href="#top" aria-label="Back to top">DRIP<span>VAULT</span><i aria-hidden="true">✳</i></a><p>Wear the difference.</p><a href="#top">Back to top ↑</a><span>© {new Date().getFullYear()} DRIPVAULT. CONCEPT SHOWCASE.</span></footer>
+    <footer className="footer"><a className="wordmark" href="#top" aria-label="Dripvault back to top">DRIP<span>VAULT</span><i aria-hidden="true">✳</i></a><p>Wear the difference.</p><a href="#top">Back to top ↑</a><span>© {new Date().getFullYear()} DRIPVAULT. CONCEPT SHOWCASE.</span></footer>
     {selectedProduct && <div className="modal-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) setSelectedProduct(null) }}><div className="product-modal" ref={modalRef} role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-describedby="modal-description"><button className="modal-close" onClick={() => setSelectedProduct(null)} aria-label="Close product details"><X size={23} /></button><img src={selectedProduct.image} alt={selectedProduct.name} width="1024" height="1024" /><div className="modal-copy"><span>DRIPVAULT / DROP 001 / {selectedProduct.index}</span><h2 id="modal-title">{selectedProduct.name}</h2><p id="modal-description">{selectedProduct.details}</p><div className="modal-price">₹{selectedProduct.price.toLocaleString('en-IN')} <span>CONCEPT COLLECTION</span></div><button onClick={() => { setSelectedProduct(null); document.getElementById('fit-lab')?.scrollIntoView({ behavior: 'smooth' }) }}>Explore the fit lab <ArrowRight size={18} /></button></div></div></div>}
   </div>
 }
